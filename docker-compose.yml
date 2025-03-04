@@ -1,0 +1,16 @@
+
+services:
+  db:
+    image: mysql:8.0 
+    container_name: mysql_db_04
+    environment:
+      MYSQL_ROOT_PASSWORD: Tutraser0
+      MYSQL_DATABASE: eventos_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+ 
+volumes:
+  mysql_data:
