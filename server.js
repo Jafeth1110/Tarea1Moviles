@@ -9,7 +9,7 @@ app.use(express.json());
 app.use('/api', clientesRoutes);
 app.use('/api', actividadesRoutes);
 
-const PORT = process.env.PORT || 3006;
+const PORT = process.env.PORT || 3000;
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
