@@ -1,19 +1,28 @@
-const { Cliente } = require('../models/Cliente');
+const { validationResult } = require('express-validator');
+const Cliente = require('../models/Cliente');
 
-const registrarCliente = async (req, res) => {
+exports.registrarCliente = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { nombre, email } = req.body;
 
   try {
-    const clienteExistente = await Cliente.findOne({ where: { email } });
-    if (clienteExistente) {
-      return res.status(400).json({ error: 'El cliente ya existe' });
+    let cliente = await Cliente.findOne({ where: { email } });
+
+    if (cliente) {
+      return res.status(400).json({ msg: 'El cliente ya está registrado' });
     }
 
-    const nuevoCliente = await Cliente.create({ nombre, email });
-    res.status(201).json(nuevoCliente);
+    cliente = await Cliente.create({ email, nombre });
+
+    console.log('Cliente creado:', cliente);
+
+    res.status(201).json(cliente);
   } catch (error) {
-    res.status(500).json({ error: 'Error al registrar el cliente' });
+    console.error('Error al registrar cliente:', error);
+    res.status(500).json({ msg: 'Error del servidor', error });
   }
 };
-
-module.exports = { registrarCliente };

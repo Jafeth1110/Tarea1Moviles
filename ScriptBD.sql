@@ -17,3 +17,4 @@ CREATE TABLE Actividad (
     clienteId INT NOT NULL,
     FOREIGN KEY (clienteId) REFERENCES Cliente(id) ON DELETE CASCADE
 );
+DESCRIBE Cliente;
