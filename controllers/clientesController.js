@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const Cliente = require('../models/Cliente'); // Asegúrate de que la ruta sea correcta
+const Cliente = require('../models/Cliente');
 
 const registrarCliente = async (req, res) => {
   const errors = validationResult(req);
